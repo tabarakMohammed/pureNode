@@ -1,0 +1,19 @@
+{
+  "name": "testnoe",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./jsFile/index.js",
+    "dev": "nodemon ./jsFile/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "@types/node": "^17.0.23"
+  }
+}
