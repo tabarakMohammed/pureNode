@@ -1,8 +1,10 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.homeController = void 0;
-class homeController {
-    Controller(req, res) {
+var homeController = /** @class */ (function () {
+    function homeController() {
+    }
+    homeController.prototype.Controller = function (req, res) {
         if (req.url == '/home') { //check the URL of the current request
             res.statusCode = 200;
             res.setHeader('Content-Type', 'text/plain');
@@ -23,6 +25,7 @@ class homeController {
         }
         else
             res.end('Invalid Request!');
-    }
-}
+    };
+    return homeController;
+}());
 exports.homeController = homeController;

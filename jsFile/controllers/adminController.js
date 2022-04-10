@@ -7,7 +7,7 @@ class adminController {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'text/plain');
             // set response content    
-            res.write("ok Auth");
+            res.write("ok Home");
             res.end();
             return res;
         }

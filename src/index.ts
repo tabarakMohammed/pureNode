@@ -1,16 +1,14 @@
 import {baseServer} from './baseServer'
-
+import  {createSingleConnection}  from './database/config/mysqlConnection'
+  
 const hostname = "127.0.0.1";
 const port = 3000;
 
 let _baseServer = new baseServer();
 
+ let _createSingleConnection = new createSingleConnection();
+ _createSingleConnection.createSingleConnection();
+
 _baseServer.getServer().listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
  });
-
-
-// var trigger = "/auth/kk",
-// regexp = new RegExp('/auth\w*'),
-// test = regexp.test(trigger);
-// console.log(test + ""); // will display true

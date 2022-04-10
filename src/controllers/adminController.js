@@ -1,9 +1,11 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.homeController = void 0;
-class homeController {
-    Controller(req, res) {
-        if (req.url == '/home') { //check the URL of the current request
+exports.__esModule = true;
+exports.adminController = void 0;
+var adminController = /** @class */ (function () {
+    function adminController() {
+    }
+    adminController.prototype.Controller = function (req, res) {
+        if (req.url == '/admin') { //check the URL of the current request
             res.statusCode = 200;
             res.setHeader('Content-Type', 'text/plain');
             // set response content    
@@ -11,18 +13,19 @@ class homeController {
             res.end();
             return res;
         }
-        else if (req.url == "/home/student") {
+        else if (req.url == "/admin/student") {
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.write('<html><body><p>This is student Page.</p></body></html>');
             res.end();
         }
-        else if (req.url == "/home/admin") {
+        else if (req.url == "/admin/admin") {
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.write('<html><body><p>This is admin Page.</p></body></html>');
             res.end();
         }
         else
             res.end('Invalid Request!');
-    }
-}
-exports.homeController = homeController;
+    };
+    return adminController;
+}());
+exports.adminController = adminController;
