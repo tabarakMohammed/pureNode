@@ -39,6 +39,7 @@ class createSingleConnection {
             }
             console.log('Connected to the MySQL server.');
         });
+        return connection;
     }
     static getConection() {
         if (createSingleConnection != null) {

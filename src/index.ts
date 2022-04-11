@@ -6,8 +6,6 @@ const port = 3000;
 
 let _baseServer = new baseServer();
 
- let _createSingleConnection = new createSingleConnection();
- _createSingleConnection.createSingleConnection();
 
 _baseServer.getServer().listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);

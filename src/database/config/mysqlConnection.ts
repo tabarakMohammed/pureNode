@@ -4,7 +4,7 @@ import * as mysql from 'mysql';
 
 export class createSingleConnection{
 
-    createSingleConnection() {
+    createSingleConnection():mysql.Connection {
         let connection = mysql.createConnection({
             host: 'localhost',
             user: 'tito',
@@ -12,16 +12,16 @@ export class createSingleConnection{
             database: 'node_schoolx'
         });
 
-        connection.connect(function(err) {
+          connection.connect(function(err) {
             if (err) {
               return console.error('error: ' + err.message);
             }
             console.log('Connected to the MySQL server.');
           });
-          
+          return connection;
     }
 
-static  getConection(){
+static  getConection()   {
 
     if(createSingleConnection != null) {
        return  new createSingleConnection();
