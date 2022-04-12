@@ -33,9 +33,11 @@ class baseServer {
     getServer() {
         return http.createServer(function (req, res) {
             let authChecker, homeChecker, adminChecker = false;
-            let regexp = new RegExp('/auth\w*');
+            let regexp = new RegExp('/auth\w*\\?*');
             let xurl = req.url ? req.url : "x";
+            console.log(xurl);
             authChecker = regexp.test(xurl);
+            console.log(authChecker);
             if (!authChecker) {
                 regexp = new RegExp('/home\w*');
                 xurl = req.url ? req.url : "x";
@@ -50,8 +52,11 @@ class baseServer {
                 process_1.exit;
             }
             if (authChecker) {
+                let url = req.url?.split('=');
+                // if(url!=null){         console.log(url[2])
+                // }
                 let auth = new authController_1.authServer;
-                auth.Controller(req, res);
+                auth.Controller(url, req, res);
             }
             else if (homeChecker) {
                 let home = new homeController_1.homeController;

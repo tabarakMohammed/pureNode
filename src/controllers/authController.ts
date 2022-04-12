@@ -1,13 +1,12 @@
 import { userServices } from "../business/services/userServices";
 import { userInsert } from "../database/crad/users/Insert";
 import { userModel } from "../database/model/users";
-//import dateFormat from "dateformat";
 
 
 export class authServer{
 
 
-    Controller(req :any, res: any): any{
+    Controller(url:any,req :any, res: any): any{
 
         if (req.url == '/auth') { 
              res.statusCode = 200;
@@ -18,20 +17,32 @@ export class authServer{
              return res;
          
          }
-         else if (req.url == "/auth/reg") {
+         else if (url[0] == "/auth/reg") {
+
+       
+
+          if (req.method == 'POST') {
+           let data = '';
+          req.on('data',(chunk: any) => {
+            data += chunk;
+          })
+          req.on('end', () => {
+            console.log(JSON.parse(data).userName + JSON.parse(data).studentId ); 
            
-            // let _Date= new Date();
-            //dateFormat(_Date, "isoDateTime")
+            let datetime = new Date();
              let _userServices = new userServices();
              let _userModel:userModel = new userModel();
-             _userModel.setUserName("test");
-             _userModel.setStudentID(1);
-             _userModel.setRegisterDate( "4/11/2022" );
-             _userModel.setUserType("student");
-             _userServices.insertNewUser(_userModel);
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.write('<html><body><p>This is student Page.</p></body></html>');
-            res.end();
+             _userModel.setUserName(JSON.parse(data).userName);
+             _userModel.setStudentID(JSON.parse(data).studentId);
+             _userModel.setRegisterDate(datetime.toLocaleString());
+             _userModel.setUserType(JSON.parse(data).userType);
+            // _userServices.insertNewUser(_userModel);
+            res.end(data);
+          })
+        } else {
+          res.end('Invalid Request!');
+                }
+
         
         }
         else if (req.url == "/auth/admin") {
