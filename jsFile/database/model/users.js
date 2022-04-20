@@ -6,7 +6,11 @@ class userModel {
         this.id = 0;
         this.userName = '';
         this.userType = '';
-        this.studentID = 0;
+        this.Token = '';
+        this.Password = '';
+    }
+    setId(_id) {
+        this.id = _id;
     }
     setUserName(_userName) {
         this.userName = _userName;
@@ -14,11 +18,14 @@ class userModel {
     setUserType(_userType) {
         this.userType = _userType;
     }
-    setRegisterDate(_registerDate) {
-        this.registerDate = _registerDate;
+    setToken(_token) {
+        this.Token = _token;
     }
-    setStudentID(_studentID) {
-        this.studentID = _studentID;
+    setPassword(_Password) {
+        this.Password = _Password;
+    }
+    getId() {
+        return this.id;
     }
     getUserName() {
         return this.userName;
@@ -26,11 +33,11 @@ class userModel {
     getUserType() {
         return this.userType;
     }
-    getRegisterDate() {
-        return this.registerDate;
+    getToken() {
+        return this.Token;
     }
-    getStudentID() {
-        return this.studentID;
+    getPassword() {
+        return this.Password;
     }
 }
 exports.userModel = userModel;

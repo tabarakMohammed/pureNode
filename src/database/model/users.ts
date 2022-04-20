@@ -2,12 +2,16 @@
 
 
 export class userModel{
-     id:number = 0 ;
+     id = 0 ;
      userName:string = '';
      userType:string = '';
-     registerDate!: string;
-     studentID:number=0;
-    
+     Token: string='';
+     Password:string='';
+     
+     setId(_id:any) {
+        this.id = _id;
+    }
+
      setUserName(_userName: string) {
         this.userName = _userName;
     }
@@ -16,12 +20,17 @@ export class userModel{
         this.userType = _userType;
     }
 
-    setRegisterDate(_registerDate: string) {
-        this.registerDate = _registerDate;
+    setToken(_token: string) {
+        this.Token = _token;
     }
 
-    setStudentID(_studentID: number) {
-        this.studentID = _studentID;
+    setPassword(_Password: string) {
+        this.Password = _Password;
+    }
+
+
+    getId() {
+        return this.id;
     }
 
     getUserName():string {
@@ -32,13 +41,13 @@ export class userModel{
         return this.userType;
     }
 
-    getRegisterDate():string {
-        return this.registerDate;
+    getToken():string {
+        return this.Token;
     }
    
 
-    getStudentID():number {
-       return this.studentID;
+    getPassword():string {
+       return this.Password;
     }
 
 }

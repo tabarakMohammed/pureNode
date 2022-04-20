@@ -6,6 +6,13 @@ class adminController {
         if (req.url == '/admin') { //check the URL of the current request
             res.statusCode = 200;
             res.setHeader('Content-Type', 'text/plain');
+            /**
+             * //import urla from "url";
+//import querystring from 'querystring';
+                //   const queryObject = urla.parse(req.url, true).query;
+                //   console.log(queryObject,queryObject.id,queryObject.name);
+           
+       */
             // set response content    
             res.write("ok Home");
             res.end();

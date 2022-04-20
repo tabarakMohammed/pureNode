@@ -1,4 +1,6 @@
 import { userInsert } from "../../database/crad/users/Insert";
+import { userRetrieve } from "../../database/crad/users/retrieve";
+import { userUpdate } from "../../database/crad/users/update";
 import { userModel } from "../../database/model/users";
 export class userServices{
 
@@ -8,12 +10,29 @@ export class userServices{
 //       this._userInsert =userInsert;
 //   }
 
-  insertNewUser(user:userModel){
-      //this._userInsert.insertNew(user);
+   
+
+   insertNewUser(user:userModel):number{
       let _userInsert:userInsert = new userInsert();
-      _userInsert.insertNew(user);
+    let  id:number =  _userInsert.insertNew(user); 
+     return  id;
   }
 
+  insertUserToken(user:userModel):string{
+    let _userUpdate:userUpdate = new userUpdate();
+   
+   return  _userUpdate.updateToken(user); 
+}
+
+getMaxId(){
+  let  _userRetrieve:userRetrieve = new userRetrieve();
+  return   _userRetrieve.retrieveMaxId();
+}
+
+getByusername(userName:string):Promise<userModel>{
+  let  _userRetrieve:userRetrieve = new userRetrieve();
+  return   _userRetrieve.retrieveByusername(userName);
+}
 
 
 }
