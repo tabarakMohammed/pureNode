@@ -34,5 +34,10 @@ getByusername(userName:string):Promise<userModel>{
   return   _userRetrieve.retrieveByusername(userName);
 }
 
+retrieveById(id:number):Promise<userModel>{
+  let  _userRetrieve:userRetrieve = new userRetrieve();
+  return   _userRetrieve.retrieveById(id);
+}
+
 
 }

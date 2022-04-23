@@ -22,6 +22,29 @@ export class userRetrieve {
     return _userModel;
   }
 
+
+  async retrieveById(id:number):Promise<userModel>{
+    let sql:string = `SELECT * FROM users as tekila WHERE id = ('${id}')`;
+    let _userModel = new userModel();
+   await this.fetchData(sql).then( (x:any)=>{
+     if(x == 0 || x == null) x=0;
+     //console.log(x[0].tekila);
+     let tekilaUser =  JSON.parse(JSON.stringify(x));
+     _userModel.userName= tekilaUser[0].UserName;
+     _userModel.userType= tekilaUser[0].UserType;
+     _userModel.id= tekilaUser[0].id;
+     _userModel.Password= tekilaUser[0].Password;
+     _userModel.Token= tekilaUser[0].token;
+     
+   }) .catch((errorMsg) => { 
+     console.log("Error:" + errorMsg);
+    });
+   return _userModel;
+ }
+
+
+
+  
        retrieveMaxId() {
      let getconnect = new createSingleConnection();
      let conn =  getconnect.createSingleConnection();

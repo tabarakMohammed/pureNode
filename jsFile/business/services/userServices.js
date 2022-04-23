@@ -26,5 +26,9 @@ class userServices {
         let _userRetrieve = new retrieve_1.userRetrieve();
         return _userRetrieve.retrieveByusername(userName);
     }
+    retrieveById(id) {
+        let _userRetrieve = new retrieve_1.userRetrieve();
+        return _userRetrieve.retrieveById(id);
+    }
 }
 exports.userServices = userServices;

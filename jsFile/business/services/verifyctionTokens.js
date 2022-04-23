@@ -20,7 +20,9 @@ class verifyToken {
             }
             if (process.env.TOKEN_KEY != null) {
                 const decoded = jsonwebtoken_1.default.verify(token, process.env.TOKEN_KEY);
+                // console.log(JSON.parse(decoded.toString()).usertype);
                 req.user = decoded;
+                // console.log(req.user);
             }
         }
         catch (err) {

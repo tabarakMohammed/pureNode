@@ -25,7 +25,9 @@ try{
    
     if( process.env.TOKEN_KEY != null){
     const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+   // console.log(JSON.parse(decoded.toString()).usertype);
     req.user = decoded;
+   // console.log(req.user);
     }
  
   }

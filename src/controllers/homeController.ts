@@ -1,10 +1,11 @@
+import { userServices } from "../business/services/userServices";
 import { verifyToken } from "../business/services/verifyctionTokens";
 
 
 export class homeController{
 
 
-    Controller(req :any, res: any): any{
+    async Controller(req :any, res: any): Promise<any>{
         let veryToken = new verifyToken();
         
                      /*** homeeeeeeeeeeeeeeeeeeeeeeeeeee ===================> */
@@ -26,7 +27,6 @@ export class homeController{
                 req.on('end', async () => {
                    console.log("ddddd"+JSON.parse(data).token)
                 });
-                
                 return res.end("kk");
 
                  } catch(err){ return res.end("theres is an error");}
@@ -48,10 +48,18 @@ export class homeController{
          else if (req.url == "/home/student") {
             
             if (req.method == 'POST') {
+                let _userServices = new userServices();
 
                 let next = "welcome to student home";
                 let s = veryToken.verifyToken(req,res,next);
-                res.end(s);
+               if(req.user.user_id){
+               // console.log(req.user.user_id);
+                let queryData = await _userServices.retrieveById(req.user.user_id);    
+               console.log(JSON.stringify(queryData));
+                res.end(JSON.stringify(queryData));
+               } else {        res.statusCode = 401;      
+                             res.end("good luck !!");         }
+                
             }else{
             
             res.statusCode = 200;
