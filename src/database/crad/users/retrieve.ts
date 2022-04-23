@@ -16,7 +16,9 @@ export class userRetrieve {
       _userModel.Password= tekilaUser[0].Password;
       _userModel.Token= tekilaUser[0].token;
       
-    });
+    }) .catch((errorMsg) => { 
+      console.log("Error:" + errorMsg);
+     });
     return _userModel;
   }
 

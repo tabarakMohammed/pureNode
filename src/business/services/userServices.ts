@@ -18,10 +18,10 @@ export class userServices{
      return  id;
   }
 
-  insertUserToken(user:userModel):string{
+  updateUserToken(userId:number, userToken:string):string{
     let _userUpdate:userUpdate = new userUpdate();
    
-   return  _userUpdate.updateToken(user); 
+   return  _userUpdate.updateToken(userId,userToken); 
 }
 
 getMaxId(){

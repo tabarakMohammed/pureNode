@@ -1,25 +1,65 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.homeController = void 0;
+const verifyctionTokens_1 = require("../business/services/verifyctionTokens");
 class homeController {
     Controller(req, res) {
-        if (req.url == '/home') { //check the URL of the current request
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'text/plain');
-            // set response content    
-            res.write("ok Home");
-            res.end();
-            return res;
+        let veryToken = new verifyctionTokens_1.verifyToken();
+        if (req.url == '/home') {
+            if (req.method == 'POST') {
+                let next = "welcome to home";
+                let s = veryToken.verifyToken(req, res, next);
+                if (s == next) {
+                    let data = '';
+                    req.on('data', (chunk) => {
+                        data += chunk;
+                        console.log("ddddd" + data);
+                    });
+                    try {
+                        req.on('end', async () => {
+                            console.log("ddddd" + JSON.parse(data).token);
+                        });
+                        return res.end("kk");
+                    }
+                    catch (err) {
+                        return res.end("theres is an error");
+                    }
+                }
+                else {
+                    res.statusCode = 401;
+                    return res.end(s);
+                }
+                /**    else {return res.end(s);}*/
+            }
+            else {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'text/plain');
+                return res.end("was not post");
+            }
         }
         else if (req.url == "/home/student") {
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.write('<html><body><p>This is student Page.</p></body></html>');
-            res.end();
+            if (req.method == 'POST') {
+                let next = "welcome to student home";
+                let s = veryToken.verifyToken(req, res, next);
+                res.end(s);
+            }
+            else {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'text/plain');
+                return res.end("was not post");
+            }
         }
         else if (req.url == "/home/admin") {
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.write('<html><body><p>This is admin Page.</p></body></html>');
-            res.end();
+            if (req.method == 'POST') {
+                let next = "welcome to admin home";
+                let s = veryToken.verifyToken(req, res, next);
+                res.end(s);
+            }
+            else {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'text/plain');
+                return res.end("was not post");
+            }
         }
         else
             res.end('Invalid Request!');

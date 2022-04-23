@@ -12,16 +12,15 @@ class verifyToken {
         if (result.error) {
             throw result.error;
         }
-        let acessToken = req.headers['authorization'].split('Bearer');
-        const token = acessToken[1].trim();
-        if (!token) {
-            return next = "A token is required for authentication";
-        }
         try {
+            let acessToken = req.headers['authorization'].split('Bearer');
+            const token = acessToken[1].trim();
+            if (!token) {
+                return next = "A token is required for authentication";
+            }
             if (process.env.TOKEN_KEY != null) {
                 const decoded = jsonwebtoken_1.default.verify(token, process.env.TOKEN_KEY);
                 req.user = decoded;
-                console.log("DECODED : :  +> :: --> " + decoded);
             }
         }
         catch (err) {

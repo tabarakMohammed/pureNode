@@ -16,44 +16,44 @@ class authServer {
             throw result.error;
         }
         if (req.url == '/auth') {
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'text/plain');
-            let _userServices = new userServices_1.userServices();
-            let _userModel = new users_1.userModel();
-            let queryData = await _userServices.getByusername('two');
-            console.log(queryData.Password);
-            console.log(queryData.userName);
-            console.log(queryData.Token);
-            // console.log(queryData.getToken);
-            res.write("ok Auth");
-            res.end();
-            // try {
-            //   // Get user input
-            //   const { email, password } = req.body;
-            //   // Validate user input
-            //   if (!(email && password)) {
-            //     res.status(400).send("All input is required");
-            //   }
-            //   // Validate if user exist in our database
-            //   const user =  User.findOne({ email });
-            //   if (user && ( bcrypt.compare(password, user.password))) {
-            //     // Create token
-            //     const token = jwt.sign(
-            //       { user_id: user._id, email },
-            //       process.env.TOKEN_KEY,
-            //       {
-            //         expiresIn: "2h",
-            //       }
-            //     );
-            //     // save user token
-            //     user.token = token;
-            //     // user
-            //     res.status(200).json(user);
-            //   }
-            //   res.status(400).send("Invalid Credentials");
-            // } catch (err) {
-            //   console.log(err);
-            // }
+            if (req.method == 'POST') {
+                let _userServices = new userServices_1.userServices();
+                let data = '';
+                req.on('data', (chunk) => {
+                    data += chunk;
+                });
+                req.on('end', async () => {
+                    try {
+                        JSON.parse(data);
+                        // Validate user input
+                        if (!(JSON.parse(data).username && JSON.parse(data).password)) {
+                            return res.end("All input is required");
+                        }
+                        let queryData = await _userServices.getByusername(JSON.parse(data).username);
+                        if (queryData.userName && await (bcryptjs_1.default.compare(JSON.parse(data).password, queryData.Password))) {
+                            // Create token
+                            if (process.env.TOKEN_KEY != null) {
+                                const token = jsonwebtoken_1.default.sign({ user_id: queryData.getId(), user_name: queryData.userName }, process.env.TOKEN_KEY, {
+                                    expiresIn: "2h",
+                                });
+                                let x = _userServices.updateUserToken(queryData.id, token);
+                                console.log('Finsh :' + x);
+                                var json = JSON.stringify({
+                                    'token': token
+                                });
+                                return res.end(json);
+                            }
+                        }
+                        res.writeHead(400, { 'Content-Type': 'text/plain' });
+                        return res.end('Invalid Credentials');
+                    }
+                    catch (err) {
+                        console.log(err);
+                        res.writeHead(401, { 'Content-Type': 'text/plain' });
+                        return res.end('err');
+                    }
+                });
+            }
             //  return res;
         }
         /*** regester section */
@@ -67,7 +67,7 @@ class authServer {
                 });
                 req.on('end', async () => {
                     if (!(JSON.parse(data).username && JSON.parse(data).password && JSON.parse(data).usertype)) {
-                        res.status(400).send("All input is required");
+                        return res.end("All input is required");
                     }
                     let _userServices = new userServices_1.userServices();
                     // check if user already exist
@@ -100,12 +100,12 @@ class authServer {
                             }
                         }
                         catch (err) { }
-                        res.end();
+                        return res.end();
                     });
                 });
             }
             else {
-                res.end('Invalid Request!');
+                return res.end('Invalid Request!');
             }
         }
         else if (req.url == "/auth/admin") {

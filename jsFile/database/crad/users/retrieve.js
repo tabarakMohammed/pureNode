@@ -17,6 +17,8 @@ class userRetrieve {
             _userModel.id = tekilaUser[0].id;
             _userModel.Password = tekilaUser[0].Password;
             _userModel.Token = tekilaUser[0].token;
+        }).catch((errorMsg) => {
+            console.log("Error:" + errorMsg);
         });
         return _userModel;
     }
@@ -44,20 +46,13 @@ class userRetrieve {
     fetchData(sql) {
         let getconnect = new mysqlConnection_1.createSingleConnection();
         let conn = getconnect.createSingleConnection();
-        //let data;
-        let _userModel = new users_1.userModel();
-        _userModel.setId(4);
         return new Promise(function (resolve, reject) {
             conn.query(sql, function (err, result) {
                 if (err)
                     reject(err);
-                _userModel.setId(result);
-                // idi = _userModel.id;
-                // console.log('insede qurey'+ idi);
                 resolve(result);
                 return result;
             });
-            ///console.log("_i_"+data);
         });
     }
 }

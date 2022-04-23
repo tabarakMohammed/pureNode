@@ -14,9 +14,9 @@ class userServices {
         let id = _userInsert.insertNew(user);
         return id;
     }
-    insertUserToken(user) {
+    updateUserToken(userId, userToken) {
         let _userUpdate = new update_1.userUpdate();
-        return _userUpdate.updateToken(user);
+        return _userUpdate.updateToken(userId, userToken);
     }
     getMaxId() {
         let _userRetrieve = new retrieve_1.userRetrieve();
